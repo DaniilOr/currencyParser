@@ -2,13 +2,13 @@ package app
 
 import (
 	"context"
-	"currencyParser/pkg/currencySVC"
-	"currencyParser/pkg/parser"
 	"encoding/json"
+	"github.com/DaniilOr/currencyParser/pkg/currencySVC"
+	"github.com/DaniilOr/currencyParser/pkg/parser"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
-	"github.com/robfig/cron"
+	"github.com/robfig/cron/v3"
 	"log"
 	"net/http"
 	"strconv"
@@ -24,8 +24,10 @@ func NewServer(saveSVC *currencySVC.Service, mux chi.Router, parserSVC *parser.P
 	return &Server{currencySVC: saveSVC,  mux: mux, parserSVC: parserSVC}
 }
 func (s *Server) StartSrapping() error{
+	// я использую cron, так как это классика
 	c := cron.New()
-	err := c.AddFunc("@every 2s", s.update())
+	// есть и более молодой модуль для использования cron, но этим я уже пользовался
+	_, err := c.AddFunc("@every 2s", s.update)
 	if err != nil{
 		log.Println(err)
 		return err
