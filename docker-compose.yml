@@ -1,0 +1,17 @@
+services:
+    parser:
+        build:
+            context: .
+        image: parser
+        ports:
+            - 9999:9999
+        environment:
+            - APP_DSN=postgres://app:pass@currenciesdb:5432/db
+    currenciesdb:
+        image: postgres:12.3-alpine
+        environment:
+            - POSTGRES_PASSWORD=pass
+            - POSTGRES_USER=app
+            - POSTGRES_DB=db
+        volumes:
+            - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
