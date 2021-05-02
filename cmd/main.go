@@ -60,7 +60,7 @@ func execute(addr string, dsn string, url string) error {
 		log.Print(err)
 		return err
 	}
-	application.StartSrapping()
+	application.StartScrapping()
 	server := &http.Server{
 		Addr:    addr,
 		Handler: application,

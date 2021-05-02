@@ -23,7 +23,7 @@ type Server struct {
 func NewServer(saveSVC *currencySVC.Service, mux chi.Router, parserSVC *parser.Parser) *Server {
 	return &Server{currencySVC: saveSVC,  mux: mux, parserSVC: parserSVC}
 }
-func (s *Server) StartSrapping() error{
+func (s *Server) StartScrapping() error{
 	// я использую cron, так как это классика
 	c := cron.New()
 	// есть и более молодой модуль для использования cron, но этим я уже пользовался
